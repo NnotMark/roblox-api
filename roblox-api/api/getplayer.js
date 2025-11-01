@@ -1,27 +1,28 @@
-import express from "express";
-import fetch from "node-fetch";
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.get("/api/getplayer", async (req, res) => {
+export default async function handler(req, res) {
   const { userId } = req.query;
-  if (!userId) return res.status(400).json({ error: "Missing userId" });
+
+  if (!userId) {
+    return res.status(400).json({ error: "Missing userId" });
+  }
 
   try {
+    // Fetch player data from Roblox API
     const response = await fetch(`https://users.roblox.com/v1/users/${userId}`);
     const data = await response.json();
 
-    return res.json({
+    if (!data || data.errors) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Return formatted data
+    return res.status(200).json({
       Id: data.id,
       Name: data.name,
       DisplayName: data.displayName,
-      JoinDate: data.created
+      JoinDate: data.created,
     });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: err.message });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
-});
-
-app.listen(PORT, () => console.log(`✅ API running on port ${PORT}`));
+}
