@@ -1,9 +1,6 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "api/getplayer.js",
-      "use": "@vercel/node"
-    }
+    { "src": "api/getplayer.js", "use": "@vercel/node" }
   ]
 }
