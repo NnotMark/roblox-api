@@ -1,0 +1,8 @@
+{
+  "builds": [
+    { "src": "api/getplayer.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/getplayer.js" }
+  ]
+}
