@@ -3,6 +3,6 @@
     { "src": "api/getplayer.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/getplayer.js" }
+    { "src": "/api/getplayer", "dest": "api/getplayer.js" }
   ]
 }
